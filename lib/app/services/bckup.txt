@@ -1,0 +1,554 @@
+import 'dart:convert' as convert;
+
+import 'package:http/http.dart' as http;
+import 'package:ticket_solution/app/models/facility.dart';
+import 'package:ticket_solution/app/utils/api_helper/api_helper.dart';
+
+import '../models/item.dart';
+import '../models/subfacility.dart';
+import '../utils/api_urls.dart';
+import '../utils/cache/ticket_category_cache.dart';
+
+class TicketDetailService {
+  static final TicketDetailService _service = TicketDetailService();
+
+  static final ApiHelper apiHelper = ApiHelper();
+
+  TicketDetailService();
+
+  factory TicketDetailService.instance() {
+    return _service;
+  }
+
+// static Future<List<Facility>> getFacilities() async {
+//     try {
+//       final apiResponse = await apiHelper.getData(ApiUrls.FACILITIES);
+//       if (apiResponse['success'] as bool) {
+//         final jsonData = apiResponse['data'] as Map<String, dynamic>;
+
+//         if (jsonData['success'] as bool) {
+//           return List<Facility>.from(
+//             (jsonData['training_types'] as List<dynamic>)
+//                 .map(
+//                   (e) => Facility.fromJson(e as Map<String, dynamic>),
+//                 )
+//                 .toList(),
+//           );
+//         }
+
+//         return [];
+//       } else {
+//         return [];
+//       }
+//     } catch (e, s) {
+//       // if (kDebugMode) rethrow;
+//       // FirebaseCrashlytics.instance.recordError(e, s);
+
+//       return [];
+//     }
+//   }
+
+  // Future<List<Facility>> getFacilities() async {
+  //   var resp = await http.get(Uri.parse(
+  //       'http://10.0.2.2:80/ticket_appadmin/public/index.php/api/facilities'));
+
+  //   if (resp.statusCode == 200) {
+  //     var response = convert.jsonDecode(resp.body) as Map<String, dynamic>;
+  //     print("$response");
+  //     if (response['success'] as bool) {
+  //       return buildFacilities(response['data']);
+  //     } else {
+  //       return [];
+  //     }
+  //   } else {
+  //     return [];
+  //   }
+
+  //   // var response = await apiHelper.getData(ApiUrls.FACILITIES);
+  //   // print("$response");
+  //   // if (response['success'] as bool) {
+  //   //   return buildFacilities(response['data']);
+  //   // } else {
+  //   //   return [];
+  //   // }
+  // }
+
+  // List<Facility> buildFacilities(data) {
+  //   List<Facility> facilities = [];
+  //   for (var element in data as List<dynamic>) {
+  //     facilities.add(Facility.fromJson(element));
+  //   }
+  //   return facilities;
+  // }
+
+  Future<List<Facility>> getFacilities() async {
+    return Future.delayed(Duration(seconds: 1), () {
+      print("data");
+      var facilities = [
+        Facility(
+            id: "1",
+            name: "Zoo",
+            url: "assets/images/entry.jpg",
+            description: "Zoo",
+            subfacilities: [
+              SubFacility(
+                  id: "11",
+                  facilityId: "1",
+                  url: "assets/images/entry.jpg",
+                  name: "Gate Entry",
+                  description: "Entering Ticket.",
+                  items: [
+                    Item(
+                        id: "111",
+                        facilityId: "1",
+                        subFacilityId: "11",
+                        name: "Adult",
+                        rate: 10.00),
+                    Item(
+                        id: "112",
+                        facilityId: "1",
+                        subFacilityId: "11",
+                        name: "Children",
+                        rate: 5.00),
+                    Item(
+                        id: "113",
+                        facilityId: "1",
+                        subFacilityId: "11",
+                        name: "Senior",
+                        rate: 5.00)
+                  ]),
+              SubFacility(
+                  id: "12",
+                  facilityId: "1",
+                  url: "assets/images/entry.jpg",
+                  name: "Camera",
+                  description: "Carrying Camera.",
+                  items: [
+                    Item(
+                        id: "123",
+                        facilityId: "1",
+                        subFacilityId: "12",
+                        name: "Qty",
+                        rate: 15.00)
+                  ]),
+            ]),
+        Facility(
+            id: "2",
+            name: "Aquarium",
+            url: "assets/images/entry.jpg",
+            description: "Aquarium",
+            subfacilities: [
+              SubFacility(
+                  id: "21",
+                  facilityId: "2",
+                  url: "assets/images/entry.jpg",
+                  name: "Gate Entry",
+                  description: "Entering Ticket.",
+                  items: [
+                    Item(
+                        id: "211",
+                        facilityId: "2",
+                        subFacilityId: "21",
+                        name: "Adult",
+                        rate: 10.00),
+                    Item(
+                        id: "212",
+                        facilityId: "2",
+                        subFacilityId: "21",
+                        name: "Children",
+                        rate: 5.00),
+                    Item(
+                        id: "213",
+                        facilityId: "2",
+                        subFacilityId: "21",
+                        name: "Senior",
+                        rate: 5.00)
+                  ]),
+              // SubFacility(
+              //     id: "2",
+              //     iconUrl: "assets/images/entry.jpg",
+              //     name: "Camera",
+              //     description: "Carrying Camera.",
+              //     items: [Item(id: "3", name: "Qty", rate: 15.00)]),
+            ]),
+        Facility(
+            id: "3",
+            name: "Mueseum",
+            url: "assets/images/entry.jpg",
+            description: "Mueseum",
+            subfacilities: [
+              SubFacility(
+                  id: "31",
+                  facilityId: "3",
+                  url: "assets/images/entry.jpg",
+                  name: "Gate Entry",
+                  description: "Entering Ticket.",
+                  items: [
+                    Item(
+                        id: "311",
+                        facilityId: "3",
+                        subFacilityId: "31",
+                        name: "Adult",
+                        rate: 10.00),
+                    Item(
+                        id: "312",
+                        facilityId: "3",
+                        subFacilityId: "31",
+                        name: "Children",
+                        rate: 5.00),
+                    Item(
+                        id: "313",
+                        facilityId: "3",
+                        subFacilityId: "31",
+                        name: "Senior",
+                        rate: 5.00)
+                  ]),
+              //   SubFacility(
+              //       id: "2",
+              //       iconUrl: "assets/images/entry.jpg",
+              //       name: "Camera",
+              //       description: "Carrying Camera.",
+              //       items: [Item(id: "3", name: "Qty", rate: 15.00)]),
+            ]),
+        Facility(
+            id: "4",
+            name: "Vehicle Parking",
+            url: "assets/images/entry.jpg",
+            description: "Vehicle Parking",
+            subfacilities: [
+              SubFacility(
+                  id: "41",
+                  facilityId: "4",
+                  url: "assets/images/entry.jpg",
+                  name: "Vehicle Parking",
+                  description: "Entering Ticket.",
+                  items: [
+                    Item(
+                        id: "411",
+                        facilityId: "4",
+                        subFacilityId: "41",
+                        name: "Four Wheeler",
+                        rate: 40.00),
+                    Item(
+                        id: "412",
+                        facilityId: "4",
+                        subFacilityId: "41",
+                        name: "Two Wheeler",
+                        rate: 25.00),
+                    Item(
+                        id: "413",
+                        facilityId: "4",
+                        subFacilityId: "41",
+                        name: "Others",
+                        rate: 50.00)
+                  ]),
+              //   SubFacility(
+              //       id: "2",
+              //       iconUrl: "assets/images/entry.jpg",
+              //       name: "Camera",
+              //       description: "Carrying Camera.",
+              //       items: [Item(id: "3", name: "Qty", rate: 15.00)]),
+            ])
+      ];
+      TicketCategoryCache.get().update(facilities);
+      return facilities;
+    });
+  }
+
+  // Future<List<SubFacility>> getTicketServices() async {
+  //   return Future.delayed(Duration(seconds: 1), () {
+  //     print("data");
+  //     var facilities = [
+  //       Facility(
+  //           id: "1",
+  //           name: "Zoo",
+  //           url: "url",
+  //           description: "Zoo",
+  //           subfacilities: [
+  //             SubFacility(
+  //                 id: "1",
+  //                 iconUrl: "assets/images/entry.jpg",
+  //                 name: "Gate Entry",
+  //                 description: "Entering Ticket.",
+  //                 items: [
+  //                   Item(id: "1", name: "Adult", rate: 10.00),
+  //                   Item(id: "2", name: "Children", rate: 5.00),
+  //                   Item(id: "3", name: "Senior", rate: 5.00)
+  //                 ]),
+  //             SubFacility(
+  //                 id: "2",
+  //                 iconUrl: "assets/images/entry.jpg",
+  //                 name: "Camera",
+  //                 description: "Carrying Camera.",
+  //                 items: [Item(id: "3", name: "Qty", rate: 15.00)]),
+  //           ]),
+  //       Facility(
+  //           id: "2",
+  //           name: "Aquarium",
+  //           url: "url",
+  //           description: "Aquarium",
+  //           subfacilities: [
+  //             SubFacility(
+  //                 id: "1",
+  //                 iconUrl: "assets/images/entry.jpg",
+  //                 name: "Gate Entry",
+  //                 description: "Entering Ticket.",
+  //                 items: [
+  //                   Item(id: "1", name: "Adult", rate: 10.00),
+  //                   Item(id: "2", name: "Children", rate: 5.00),
+  //                   Item(id: "3", name: "Senior", rate: 5.00)
+  //                 ]),
+  //             SubFacility(
+  //                 id: "2",
+  //                 iconUrl: "assets/images/entry.jpg",
+  //                 name: "Camera",
+  //                 description: "Carrying Camera.",
+  //                 items: [Item(id: "3", name: "Qty", rate: 15.00)]),
+  //           ]),
+  //       Facility(
+  //           id: "3",
+  //           name: "Muesium",
+  //           url: "url",
+  //           description: "Mueseum",
+  //           subfacilities: [
+  //             SubFacility(
+  //                 id: "1",
+  //                 iconUrl: "assets/images/entry.jpg",
+  //                 name: "Gate Entry",
+  //                 description: "Entering Ticket.",
+  //                 items: [
+  //                   Item(id: "1", name: "Adult", rate: 10.00),
+  //                   Item(id: "2", name: "Children", rate: 5.00),
+  //                   Item(id: "3", name: "Senior", rate: 5.00)
+  //                 ]),
+  //             SubFacility(
+  //                 id: "2",
+  //                 iconUrl: "assets/images/entry.jpg",
+  //                 name: "Camera",
+  //                 description: "Carrying Camera.",
+  //                 items: [Item(id: "3", name: "Qty", rate: 15.00)]),
+  //           ])
+  //     ];
+  //     var tickets = _doGetTicketService();
+  //     TicketCategoryCache.get().update(tickets);
+  //     return tickets;
+  //   });
+  // }
+
+  // _doGetTicketService() {
+  //   return [
+  //     SubFacility(
+  //         id: "1",
+  //         iconUrl: "assets/images/entry.jpg",
+  //         name: "Gate Entry",
+  //         description: "Entering Ticket.",
+  //         items: [
+  //           Item(id: "1", name: "Adult", rate: 10.00),
+  //           Item(id: "2", name: "Children", rate: 5.00),
+  //           Item(id: "3", name: "Senior", rate: 5.00)
+  //         ]),
+  //     SubFacility(
+  //         id: "2",
+  //         iconUrl: "assets/images/entry.jpg",
+  //         name: "Camera",
+  //         description: "Carrying Camera.",
+  //         items: [Item(id: "3", name: "Qty", rate: 15.00)]),
+  //     SubFacility(
+  //       iconUrl: "assets/images/entry.jpg",
+  //       id: "3",
+  //       name: "Vehicle Parking",
+  //       description: "Aquarium Entry.",
+  //       items: [Item(id: "3", name: "Qty", rate: 15.00)],
+  //     ),
+  //     SubFacility(
+  //       iconUrl: "assets/images/entry.jpg",
+  //       id: "4",
+  //       name: "Shooting",
+  //       description: "Aquarium Entry.",
+  //       items: [Item(id: "3", name: "Qty", rate: 15.00)],
+  //     ),
+  //     SubFacility(
+  //       iconUrl: "assets/images/entry.jpg",
+  //       id: "5",
+  //       name: "Videography",
+  //       description: "Aquarium Entry.",
+  //       items: [Item(id: "3", name: "Qty", rate: 15.00)],
+  //     ),
+  //     SubFacility(
+  //       iconUrl: "assets/images/entry.jpg",
+  //       id: "6",
+  //       name: "Pool Entry",
+  //       description: "Entering Pool Ticket.",
+  //       items: [Item(id: "3", name: "Qty", rate: 15.00)],
+  //     ),
+  //     SubFacility(
+  //       iconUrl: "assets/images/entry.jpg",
+  //       name: "Aquarium Entry",
+  //       id: "7",
+  //       description: "Aquarium Entry.",
+  //       items: [Item(id: "3", name: "Qty", rate: 15.00)],
+  //     ),
+  //     SubFacility(
+  //       iconUrl: "assets/images/entry.jpg",
+  //       name: "Tennis Court Entry",
+  //       id: "8",
+  //       description: "Aquarium Entry.",
+  //       items: [Item(id: "3", name: "Qty", rate: 15.00)],
+  //     ),
+  //     // TicketBean(iconUrl: "assets/images/entry.jpg", name: "Videography", description: "Aquarium Entry.", category: "count"),
+  //     // TicketBean(iconUrl: "assets/images/entry.jpg", name: "Pool Entry", description: "Entering Pool Ticket.", category: "count"),
+  //     // TicketBean(iconUrl: "assets/images/entry.jpg", name: "Aquarium Entry", description: "Aquarium Entry.", category: "count"),
+  //     // TicketBean(iconUrl: "assets/images/entry.jpg", name: "Tennis Court Entry", description: "Aquarium Entry.", category: "count"),
+  //     // TicketBean(iconUrl: "assets/images/entry.jpg", name: "Tennis Court Entry", description: "Aquarium Entry.", category: "count"),
+  //   ];
+  // }
+}
+
+return KeyboardDismissOnTap(
+      child: Scaffold(
+        body: AnnotatedRegion(
+          value: const SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.dark,
+          ),
+          child: RefreshIndicator(
+            onRefresh: () => controller.loadData(),
+            child: ListView(
+              shrinkWrap: true,
+              // padding: screenPadding,
+              children: [
+                DashboardHeader(),
+                DashboardProgressSection(),
+
+                //DashboardChart(),
+              ],
+            ),
+          ),
+        ),
+        drawerEnableOpenDragGesture: false,
+        drawer: const DashboardDrawer(),
+      ),
+    );
+  }
+
+  ///////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////
+
+  import 'package:flutter/material.dart';
+// import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+// import 'package:ticket_solution/app/models/category_item.dart';
+// import 'package:ticket_solution/app/models/subcategory_item.dart';
+import 'package:ticket_solution/app/models/ticket_item.dart';
+// import 'package:ticket_solution/app/modules/dashboard/views/widgets/ticket_entry_sheet.dart';
+import 'package:ticket_solution/app/utils/widgets/counter_widget.dart';
+
+// import '../../../../models/facility.dart';
+// import '../../../../models/ticket_payment_details.dart';
+import '../../../../utils/widgets/counter_widget ex.dart';
+import '../../controllers/dashboard_controller.dart';
+
+class ItemsDashboard extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return GetBuilder<DashboardController>(
+      builder: (_) {
+        print("builiding items.");
+        return Container(
+          child: ListView.builder(
+              itemCount: _.currentSubFacility.items.length,
+              itemBuilder: (context, index) {
+                var item = _.currentSubFacility.items[index];
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black26, width: 1),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 1,
+                              spreadRadius: 1,
+                              offset: Offset(1, 1))
+                        ]),
+                    height: 70,
+                    // color: Colors.teal[100],
+                    child: Row(
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Container(
+                              // height: 50,
+                              // width: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5)),
+                                image: DecorationImage(
+                                  // alignment: Alignment.topLeft,
+                                  fit: BoxFit.fitWidth,
+                                  image: AssetImage(
+                                    _.currentSubFacility.url,
+                                  ),
+                                ),
+                              ),
+                            )),
+                        Expanded(
+                            flex: 3,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                    flex: 2,
+                                    child: Center(
+                                      child: Text(
+                                        item.name,
+                                        style: GoogleFonts.abel(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    )),
+                                Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      'Rs. ${item.rate}',
+                                      style: GoogleFonts.abel(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ))
+                              ],
+                            )),
+                        Expanded(
+                            flex: 2,
+                            child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 5),
+                                child: CounterWidgetEx(
+                                  value: _.getItemCount(
+                                      _.currentSubFacility.id, item.id),
+                                  onChanged: (value) {
+                                    print("value ---> $value");
+                                    _.updatePayementDetails(
+                                        _.currentSubFacility.id, [
+                                      TicketItem(
+                                          itemId: item.id,
+                                          facilityId: _.currentFacility.id,
+                                          subFacilityId:
+                                              _.currentSubFacility.id,
+                                          name: item.name,
+                                          rate: item.rate,
+                                          count: value)
+                                    ]);
+                                  },
+                                )))
+                      ],
+                    ),
+                  ),
+                );
+              }),
+        );
+      },
+    );
+  }
+}

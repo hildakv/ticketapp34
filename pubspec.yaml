@@ -1,0 +1,51 @@
+name: ticket_app
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+
+dependencies:
+  async: ^2.8.2
+  dartx: ^1.1.0
+  dartz: ^0.10.1
+  cupertino_icons: ^1.0.2
+  get: ^4.6.6
+  # firebase_analytics: ^9.1.10
+  # firebase_core: ^1.18.0
+  # firebase_crashlytics: ^2.8.2
+  # firebase_messaging: ^12.0.0
+  # firebase_performance: ^0.8.0+14
+  flutter:
+    sdk: flutter
+  flutter_keyboard_visibility: ^6.0.0
+  flutter_form_builder: ^9.5.0
+  form_builder_extra_fields: ^11.0.0
+  form_builder_validators: ^11.0.0
+  flutter_local_notifications: ^17.2.3
+  google_fonts: ^6.2.1
+  get_storage: ^2.0.3
+  # quantity_input: ^1.0.2
+  input_quantity: ^2.4.1
+  pinelab_sdk: ^0.0.6
+  expandable_bottom_sheet: ^1.1.1+1
+  sliding_up_panel: ^2.0.0+1
+  badges: ^3.1.2
+  # badges: ^3.1.1
+  keyboard_dismisser: ^3.0.0
+  json_serializable: ^6.5.4
+  json_annotation: ^4.7.0
+  cached_network_image: ^3.2.2
+  device_info_plus: ^11.0.0
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  build_runner: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/lottie/
